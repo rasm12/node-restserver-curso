@@ -37,7 +37,7 @@ app.post('/login', (req, response) => {
 
         let token = jwt.sign({
             data: usDB
-        }, 'secret', { expiresIn: 60 * 60 })
+        }, process.env.SEED, { expiresIn: 60 * 60 })
 
         return response.json({
             ok: true,

@@ -16,7 +16,10 @@ process.env.urlDB = urlDB;
 // vencimiento del token
 // ============================================
 
+process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
+
 
 // ============================================
 // seed de jwt
 // ============================================
+process.env.SEED = process.env.SEED || 'SEED-DEV';

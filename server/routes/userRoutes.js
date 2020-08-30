@@ -5,7 +5,9 @@ const _ = require('underscore');
 
 const app = express();
 
-app.get('/get-all-users', (req, response) => {
+const { verificaToken } = require('../middlewares/autenticacion');
+
+app.get('/get-all-users', verificaToken, (req, response) => {
     Usuario.find({}, 'nombre email')
         .exec((err, res) => {
             if (err) {
