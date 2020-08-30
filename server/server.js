@@ -1,6 +1,10 @@
 require('./config/config');
 
 const express = require('express')
+    // Using Node.js `require()`
+const mongoose = require('mongoose');
+
+
 const app = express()
 
 
@@ -11,34 +15,23 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/usuario', function(req, res) {
-    res.json('get usuario');
-});
 
-app.post('/usuario', function(req, res) {
+app.use(require('./routes/userRoutes'));
 
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-
-        res.status(400).json({ message: 'Nombre es necesario', success: false });
-
-    } else {
-        res.json(body);
+mongoose.connect(process.env.urlDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    dbName: 'cafe'
+}, (err, resp) => {
+    if (err) {
+        throw err;
     }
 
+    console.log('Base de datos ONLINE');
 
 });
 
-app.put('/usuario/:id', function(req, res) {
-
-    let id = req.params.id;
-    res.json({ id });
-});
-
-app.delete('/usuario', function(req, res) {
-    res.json('o delete');
-});
 
 
 
