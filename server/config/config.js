@@ -10,6 +10,13 @@ if (process.env.NODE_ENV === 'DEV') {
     urlDB = process.env.MONGO_URI;
 }
 
-console.log(process.env.NODE_ENV)
-
 process.env.urlDB = urlDB;
+
+// ============================================
+// vencimiento del token
+// ============================================
+
+
+// ============================================
+// seed de jwt
+// ============================================
