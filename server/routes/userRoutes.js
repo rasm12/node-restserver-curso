@@ -8,6 +8,8 @@ const app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
 
 app.get('/get-all-users', verificaToken, (req, response) => {
+
+    return response.json(req.usuario);
     Usuario.find({}, 'nombre email')
         .exec((err, res) => {
             if (err) {
@@ -32,7 +34,7 @@ app.get('/get-all-users', verificaToken, (req, response) => {
         });
 });
 
-app.get('/usuarios', function(req, response) {
+app.get('/usuarios', verificaToken, function(req, response) {
 
     let from = req.query.from || 0;
 
@@ -68,7 +70,7 @@ app.get('/usuarios', function(req, response) {
         });
 });
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', verificaToken, function(req, res) {
 
     let body = req.body;
     // let usuario = new Usuario({
@@ -100,7 +102,7 @@ app.post('/usuario', function(req, res) {
 });
 
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', verificaToken, function(req, res) {
 
     let id = req.params.id;
 
@@ -119,7 +121,7 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', verificaToken, function(req, res) {
 
     let id = req.params.id;
 
