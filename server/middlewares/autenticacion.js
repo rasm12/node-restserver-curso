@@ -32,10 +32,38 @@ let verificaAdminRole = (req, res, next) => {
         });
     }
 
+
+
+    next();
+}
+
+let verificaTokenImg = (req, res, next) => {
+    let token = req.query.token;
+    if (!token) {
+        return res.status(401).json({
+            ok: false,
+            'err': 'No tiene permisos para acceder a este recurso'
+        });
+    }
+
+    jwt.verify(token, process.env.SEED, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err
+            });
+        }
+
+        req.usuario = decoded.data
+
+        next()
+    });
+
     next();
 }
 
 module.exports = {
     verificaToken,
-    verificaAdminRole
+    verificaAdminRole,
+    verificaTokenImg
 };
