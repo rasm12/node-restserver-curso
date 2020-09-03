@@ -23,6 +23,19 @@ let verificaToken = (req, res, next) => {
 
 };
 
+let verificaAdminRole = (req, res, next) => {
+    let usuario = req.usuario
+    if (usuario.role !== 'ADMIN_ROLE') {
+        return res.status(401).json({
+            ok: false,
+            'err': 'No tiene permisos para acceder a este recurso'
+        });
+    }
+
+    next();
+}
+
 module.exports = {
-    verificaToken
+    verificaToken,
+    verificaAdminRole
 };

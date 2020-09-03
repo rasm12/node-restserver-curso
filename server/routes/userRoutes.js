@@ -5,11 +5,11 @@ const _ = require('underscore');
 
 const app = express();
 
-const { verificaToken } = require('../middlewares/autenticacion');
+const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion');
 
-app.get('/get-all-users', verificaToken, (req, response) => {
+app.get('/get-all-users', [verificaToken, verificaAdminRole], (req, response) => {
 
-    return response.json(req.usuario);
+
     Usuario.find({}, 'nombre email')
         .exec((err, res) => {
             if (err) {
